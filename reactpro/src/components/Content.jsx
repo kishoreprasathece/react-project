@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Content = () => {
-    const [products, setProducts] = useState([]); // State to hold products
-    const [error, setError] = useState(null); // State to handle errors
+const [data , setData] = useState([]);
+const  [error , setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setProducts(data); // Set the fetched data to state
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setError('Failed to load data.'); // Set error message
-            }
-        };
-
-        fetchData(); // Call fetchData on component mount
-    }, []); // Empty dependency array ensures it runs once
-
+useEffect(()=>{
+    axios.get('https://fakestoreapi.com/products')
+    .then(response=>{
+    setData(response.data)
+    }
+    
+    )
+    .catch(err=>{
+        setError(error.message)
+    })
+},[])
     return (
         <div>
-            <h1>Content</h1>
-            {error && <p>{error}</p>} {/* Display error message if any */}
-            <div id="data-container">
-                {products.map((product) => (
-                    <div className="product" key={product.id}>
-                        <h3>{product.title}</h3>
-                        <img src={product.image} alt={product.title} width="100" />
-                        <p>Price: ${product.price}</p>
-                        <button>Add to Cart</button>
-                    </div>
-                ))}
-            </div>
+            {error ? (
+                <p>Error: {error}</p> // Display error message if there's an error
+            ) : (
+                <ul className='grid grid-cols-4 bg-teal-100 p-8' >
+                    {data.map(item => (
+                        <li  key={item.id}>
+                            <div >
+                                <h3 className='line-clamp-4 my-2 text-clip text-indigo-500 font-rig' >{item.title}</h3>
+                                <img src={item.image} alt={item.title} width="120" />
+                                <p className='font-rig'  >Price: ${item.price}</p>
+                                <button className='border border-r-4 rounded-xl text-black-800 bg-yellow-200' >Add to Cart</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
