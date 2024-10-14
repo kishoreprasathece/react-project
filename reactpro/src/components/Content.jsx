@@ -25,18 +25,18 @@ const Content = () => {
   const addToCart = (item) => {
     if (cartItems.some(cartItem => cartItem.id === item.id)) {
       alert("Item already added to the cart");
-      return; // Prevent adding duplicate items
+      return; 
     }
 
     setCartItems([...cartItems, item]);
   };
 
   const removeFromCart = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id)); // Remove item from cart
+    setCartItems(cartItems.filter(item => item.id !== id)); 
   };
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen); // Toggle modal visibility
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -50,12 +50,12 @@ const Content = () => {
           {data.map(item => (
             <li key={item.id}>
               <div>
-                <h3 className='line-clamp-4 my-2 text-clip text-indigo-500'>{item.title}</h3>
+                <h3 className='line-clamp-6  my-2 text-clip text-indigo-500'>{item.title}</h3>
                 <img src={item.image} alt={item.title} width="120" />
                 <p className='text-xl my-2'>Price: ${item.price}</p>
                 <button className='bg-orange-400 p-2 rounded'>Buy now</button>
                 <button
-                  className='bg-yellow-200 p-2 rounded'
+                  className='bg-yellow-200 p-2 my-3 gap-2 rounded'
                   onClick={() => addToCart(item)}
                 >
                   Add to cart
