@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import CartModal from './CartModal';
+import Cartpage from './Cartpage';
 import Footer from './Footer';
 
 const Content = () => {
@@ -68,7 +68,7 @@ const Content = () => {
       <Footer />
 
       {isModalOpen && (
-        <CartModal 
+        <Cartpage
           cartItems={cartItems} 
           onRemove={removeFromCart} 
           onClose={toggleModal} 

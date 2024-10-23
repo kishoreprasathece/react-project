@@ -38,12 +38,12 @@ const Footer = () => {
             <p class="text-lg font-bold mb-2">SOCIAL MEDIA</p>
             <ul class="list-none flex space-x-4 items-center">
                 <li>
-                    <a href="https://www.instagram.com/alphaklifestyle?igsh=MXVxdDRwMnllc2Q5">
+                    <a href="https://www.instagram.com/">
                         <img src="assests/Instagram.png" alt="Instagram" class="w-6 h-6"/>
                     </a>
                 </li>
                 <li>
-                    <a href="https://wa.me/message/LHU3NFQZR4I3H1">
+                    <a href="https://wa.me/message">
                         <img src="assests/WhatsApp.png" alt="WhatsApp" class="w-6 h-6"/>
                     </a>
                 </li>
