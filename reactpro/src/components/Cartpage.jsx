@@ -1,7 +1,7 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 
-const Cartpage = ({ cartItems, onRemove, onClose }) => {
-
+const CartPage = ({ cartItems, onRemove }) => {
+  // Reducer for managing item quantity
   function reducer(state, action) {
     switch (action.type) {
       case 'INCREMENT':
@@ -13,95 +13,83 @@ const Cartpage = ({ cartItems, onRemove, onClose }) => {
     }
   }
 
-  const initialQtyState = { qty: 1 }; 
-  
+  const initialQtyState = { qty: 1 };
   const [totalValue, setTotalValue] = useState(0);
 
-  
+  // Function to calculate total cart value
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      const itemQty = item.qty || 1; 
-      total += itemQty * item.price; // Multiply quantity by price
+      const itemQty = item.qty || 1;
+      total += itemQty * item.price;
     });
-    setTotalValue(total); // Update the total value state
+    setTotalValue(total);
   };
 
-  
   useEffect(() => {
     calculateTotal();
   }, [cartItems]);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-75 flex justify-center items-center">
-      <div className="bg-white p-4 rounded-lg w-400">
-        <h2 className="text-lg font-bold">Your Cart</h2>
-        {cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
-        ) : (
-          <ul>
-            {cartItems.map((item) => {
-              const [state, dispatch] = useReducer(reducer, initialQtyState); // UseReducer for each cart item
+    <div className="p-4">
+      <h2 className="text-lg font-bold">Your Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <ul>
+          {cartItems.map((item) => {
+            const [state, dispatch] = useReducer(reducer, initialQtyState);
 
-              // Automatically remove item if qty reaches 0
-              if (state.qty === 0) {
-                onRemove(item.id);
-              }
+            if (state.qty === 0) {
+              onRemove(item.id);
+            }
 
-              // Calculate the item total based on quantity
-              const itemTotal = state.qty * item.price;
+            item.qty = state.qty;
 
-              // Update the item’s quantity in cartItems
-              item.qty = state.qty;
-
-              return (
-                <li key={item.id} className="flex justify-between items-center my-2">
-                  <span>{item.title}</span>
-                  <img src={item.image} alt={item.title} width="120" />
-                  <p className="text-xl my-2">Price: ${item.price}</p>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => {
-                        dispatch({ type: 'INCREMENT' });
-                        calculateTotal(); // Recalculate total after increment
-                      }}
-                      className="bg-green-500 text-white p-1 rounded"
-                    >
-                      +
-                    </button>
-                    <p>qty: {state.qty}</p>
-                    <button
-                      onClick={() => {
-                        dispatch({ type: 'DECREMENT' });
-                        calculateTotal(); // Recalculate total after decrement
-                      }}
-                      className="bg-red-500 text-white p-1 rounded"
-                    >
-                      -
-                    </button>
-                  </div>
+            return (
+              <li key={item.id} className="flex justify-between items-center my-2">
+                <span>{item.title}</span>
+                <img src={item.image} alt={item.title} width="120" />
+                <p className="text-xl my-2">Price: ${item.price}</p>
+                <div className="flex items-center space-x-2">
                   <button
                     onClick={() => {
-                      onRemove(item.id);
-                      calculateTotal(); // Recalculate total after removal
+                      dispatch({ type: 'INCREMENT' });
+                      calculateTotal();
+                    }}
+                    className="bg-green-500 text-white p-1 rounded"
+                  >
+                    +
+                  </button>
+                  <p>qty: {state.qty}</p>
+                  <button
+                    onClick={() => {
+                      dispatch({ type: 'DECREMENT' });
+                      calculateTotal();
                     }}
                     className="bg-red-500 text-white p-1 rounded"
                   >
-                    Remove
+                    -
                   </button>
-                  <p>Total: ${itemTotal.toFixed(2)}</p>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-        <p className="text-lg font-bold">Cart Total: ${totalValue.toFixed(2)}</p>
-        <button onClick={onClose} className="mt-4 bg-gray-300 p-2 rounded">
-          Close
-        </button>
-      </div>
+                </div>
+                <button
+                  onClick={() => {
+                    onRemove(item.id);
+                    calculateTotal();
+                  }}
+                  className="bg-red-500 text-white p-1 rounded"
+                >
+                  Remove
+                </button>
+                <p>Total: ${(state.qty * item.price).toFixed(2)}</p>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <p className="text-lg font-bold">Cart Total: ${totalValue.toFixed(2)}</p>
     </div>
   );
 };
 
-export default Cartpage;
+export default CartPage;
