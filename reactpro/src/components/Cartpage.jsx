@@ -15,15 +15,22 @@ const CartPage = ({ cartItems, onRemove }) => {
 
   const initialQtyState = { qty: 1 };
   const [totalValue, setTotalValue] = useState(0);
+  const [discountedTotal, setDiscountedTotal] = useState(0);
 
-
+  // Function to calculate total and apply discount
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
       const itemQty = item.qty || 1;
       total += itemQty * item.price;
     });
+
+    // Applying a 10% discount
+    const discount = total * 0.1;
+    const discounted = total - discount;
+
     setTotalValue(total);
+    setDiscountedTotal(discounted);
   };
 
   useEffect(() => {
@@ -88,6 +95,7 @@ const CartPage = ({ cartItems, onRemove }) => {
         </ul>
       )}
       <p className="text-lg font-bold">Cart Total: ${totalValue.toFixed(2)}</p>
+      <p className="text-lg font-bold">Discounted Total (10% off): ${discountedTotal.toFixed(2)}</p>
     </div>
   );
 };
