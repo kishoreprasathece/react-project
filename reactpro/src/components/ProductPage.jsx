@@ -25,7 +25,7 @@ const ProductPage = ({ addToCart }) => {
                 <p className="text-xl my-2">Price: ${item.price}</p>
                 <button className="bg-orange-400 p-2 rounded">Buy now</button>
                 <button
-                  className="bg-yellow-200 p-2 my-3 gap-2 rounded"
+                  className="bg-yellow-200 p-2 my-3  gap-2 rounded"
                   onClick={() => addToCart(item)}
                 >
                   Add to cart

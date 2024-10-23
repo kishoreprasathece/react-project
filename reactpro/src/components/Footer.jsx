@@ -55,7 +55,7 @@ const Footer = () => {
 
 
 <footer class="bg-black text-white text-center p-4">
-    <p>© 2024 How Of Alpha.</p>
+    <p>© 2024 ECOMM.</p>
 </footer>
  
         </div>

@@ -16,7 +16,7 @@ const CartPage = ({ cartItems, onRemove }) => {
   const initialQtyState = { qty: 1 };
   const [totalValue, setTotalValue] = useState(0);
 
-  // Function to calculate total cart value
+
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
