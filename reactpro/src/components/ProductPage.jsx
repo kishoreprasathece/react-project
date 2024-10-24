@@ -12,20 +12,19 @@ const ProductPage = ({ addToCart }) => {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto py-14">
       {error ? (
-        <p>Error: {error}</p>
+        <p className="text-red-500 text-lg text-center">Error: {error}</p>
       ) : (
-        <ul className="grid grid-cols-4 mx-2 bg-teal-100 p-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-2">
           {data.map(item => (
-            <li key={item.id}>
-              <div>
-                <h3 className="line-clamp-6 my-2 text-indigo-500">{item.title}</h3>
-                <img src={item.image} alt={item.title} width="120" />
-                <p className="text-xl my-2">Price: ${item.price}</p>
-                <button className="bg-orange-400 p-2 rounded">Buy now</button>
+            <li key={item.id} className="bg-white shadow-md rounded-lg overflow-clip transition-transform transform hover:scale-105">
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-indigo-600 my-2">{item.title}</h3>
+                <img src={item.image} alt={item.title} className="w-48 h-48 object-center" />
+                <p className="text-xl font-bold text-gray-800 my-2">Price: ${item.price}</p>
                 <button
-                  className="bg-yellow-200 p-2 my-3  gap-2 rounded"
+                  className="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
                   onClick={() => addToCart(item)}
                 >
                   Add to cart

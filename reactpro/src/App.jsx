@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductPage from './components/ProductPage';
@@ -8,16 +9,16 @@ import Footer from './components/Footer';
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Add item to cart
   const addToCart = (item) => {
-    if (cartItems.some(cartItem => cartItem.id === item.id)) {
+
+    const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+    if (existingItem) {
       alert("Item already added to the cart");
       return;
     }
-    setCartItems([...cartItems, item]);
+    setCartItems([...cartItems, { ...item, qty: 1 }]); // Add quantity to the item
   };
 
-  // Remove item from cart
   const removeFromCart = (id) => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
@@ -26,21 +27,8 @@ const App = () => {
     <Router>
       <Navbar cartCount={cartItems.length} />
       <Routes>
-        {/* Product page route */}
-        <Route
-          path="/"
-          element={<ProductPage addToCart={addToCart} />}
-        />
-        {/* Cart page route */}
-        <Route
-          path="/cart"
-          element={
-            <CartPage
-              cartItems={cartItems}
-              onRemove={removeFromCart}
-            />
-          }
-        />
+        <Route path="/" element={<ProductPage addToCart={addToCart} />} />
+        <Route path="/cart" element={<CartPage cartItems={cartItems} onRemove={removeFromCart} />} />
       </Routes>
       <Footer />
     </Router>

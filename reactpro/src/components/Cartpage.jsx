@@ -1,101 +1,85 @@
-import React, { useReducer, useEffect, useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 
 const CartPage = ({ cartItems, onRemove }) => {
-  // Reducer for managing item quantity
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'INCREMENT':
-        return { qty: state.qty + 1 };
-      case 'DECREMENT':
-        return { qty: state.qty > 1 ? state.qty - 1 : 0 };
-      default:
-        return state;
-    }
-  }
+  const [cart, setCart] = useState(cartItems);
 
-  const initialQtyState = { qty: 1 };
-  const [totalValue, setTotalValue] = useState(0);
-  const [discountedTotal, setDiscountedTotal] = useState(0);
-
-  // Function to calculate total and apply discount
   const calculateTotal = () => {
     let total = 0;
-    cartItems.forEach((item) => {
-      const itemQty = item.qty || 1;
-      total += itemQty * item.price;
+    cart.forEach((item) => {
+      total += item.qty * item.price; // Use item.qty instead of a default
     });
 
-    // Applying a 10% discount
     const discount = total * 0.1;
     const discounted = total - discount;
 
-    setTotalValue(total);
-    setDiscountedTotal(discounted);
+    return { total, discounted };
   };
 
   useEffect(() => {
-    calculateTotal();
+    setCart(cartItems);
   }, [cartItems]);
 
+  const { total, discounted } = calculateTotal();
+
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold">Your Cart</h2>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+    <div className="max-w-5xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+      {cart.length === 0 ? (
+        <p className="text-center text-gray-500">Your cart is empty.</p>
       ) : (
-        <ul>
-          {cartItems.map((item) => {
-            const [state, dispatch] = useReducer(reducer, initialQtyState);
-
-            if (state.qty === 0) {
-              onRemove(item.id);
-            }
-
-            item.qty = state.qty;
-
-            return (
-              <li key={item.id} className="flex justify-between items-center my-2">
-                <span>{item.title}</span>
-                <img src={item.image} alt={item.title} width="120" />
-                <p className="text-xl my-2">Price: ${item.price}</p>
-                <div className="flex items-center space-x-2">
+        <ul className="space-y-4">
+          {cart.map((item, index) => (
+            <li key={item.id} className="flex justify-between items-center p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow">
+              <img src={item.image} alt={item.title} className="w-24 h-24 object-cover rounded" />
+              <div className="flex-1 mx-4">
+                <h3 className="text-lg font-semibold text-indigo-600">{item.title}</h3>
+                <p className="text-xl text-gray-800">Price: ${item.price.toFixed(2)}</p>
+                <div className="flex items-center space-x-2 mt-2">
                   <button
                     onClick={() => {
-                      dispatch({ type: 'INCREMENT' });
-                      calculateTotal();
+                      const newCart = [...cart];
+                      newCart[index].qty += 1;
+                      setCart(newCart);
                     }}
-                    className="bg-green-500 text-white p-1 rounded"
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded transition"
                   >
                     +
                   </button>
-                  <p>qty: {state.qty}</p>
+                  <p className="font-semibold">Qty: {item.qty}</p>
                   <button
                     onClick={() => {
-                      dispatch({ type: 'DECREMENT' });
-                      calculateTotal();
+                      if (item.qty > 1) {
+                        const newCart = [...cart];
+                        newCart[index].qty -= 1;
+                        setCart(newCart);
+                      }
                     }}
-                    className="bg-red-500 text-white p-1 rounded"
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded transition"
                   >
                     -
                   </button>
                 </div>
-                <button
-                  onClick={() => {
-                    onRemove(item.id);
-                    calculateTotal();
-                  }}
-                  className="bg-red-500 text-white p-1 rounded"
-                >
-                  Remove
-                </button>
-                <p>Total: ${(state.qty * item.price).toFixed(2)}</p>
-              </li>
-            );
-          })}
+              </div>
+              <button
+                onClick={() => {
+                  onRemove(item.id);
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded transition"
+              >
+                Remove
+              </button>
+              <p className="text-lg font-bold ml-4">Total: ${(item.qty * item.price).toFixed(2)}</p>
+            </li>
+          ))}
         </ul>
       )}
-      <p className="text-lg font-bold">Cart Total: ${totalValue.toFixed(2)}</p>
-      <p className="text-lg font-bold">Discounted Total (10% off): ${discountedTotal.toFixed(2)}</p>
+      {cart.length > 0 && (
+        <div className="mt-6">
+          <p className="text-xl font-bold">Cart Total: ${total.toFixed(2)}</p>
+          <p className="text-xl font-bold">Discounted Total (10% off): ${discounted.toFixed(2)}</p>
+        </div>
+      )}
     </div>
   );
 };
