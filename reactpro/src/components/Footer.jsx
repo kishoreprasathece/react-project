@@ -39,12 +39,12 @@ const Footer = () => {
             <ul class="list-none flex space-x-4 items-center">
                 <li>
                     <a href="https://www.instagram.com/">
-                        <img src="assests/Instagram.png" alt="Instagram" class="w-6 h-6"/>
+                        <img src="image/Instagram.png" alt="Instagram" class="w-6 h-6"/>
                     </a>
                 </li>
                 <li>
                     <a href="https://wa.me/message">
-                        <img src="assests/WhatsApp.png" alt="WhatsApp" class="w-6 h-6"/>
+                        <img src="image/WhatsApp.png" alt="WhatsApp" class="w-6 h-6"/>
                     </a>
                 </li>
             </ul>

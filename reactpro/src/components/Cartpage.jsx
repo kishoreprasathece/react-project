@@ -30,10 +30,10 @@ const CartPage = ({ cartItems, onRemove }) => {
       ) : (
         <ul className="space-y-4">
           {cart.map((item, index) => (
-            <li key={item.id} className="flex justify-between items-center p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow">
+            <li key={item.id} className="flex justify-between items-center p-4 bg-teal-200 shadow-md rounded-lg hover:shadow-lg transition-shadow">
               <img src={item.image} alt={item.title} className="w-24 h-24 object-cover rounded" />
               <div className="flex-1 mx-4">
-                <h3 className="text-lg font-semibold text-indigo-600">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-violet-400">{item.title}</h3>
                 <p className="text-xl text-gray-800">Price: ${item.price.toFixed(2)}</p>
                 <div className="flex items-center space-x-2 mt-2">
                   <button
