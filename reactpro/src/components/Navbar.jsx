@@ -5,17 +5,23 @@ const Navbar = ({ cartCount }) => {
   const navigate = useNavigate();
 
   return (
-    <nav className="flex justify-between p-4 bg-black text-white">
-      <h1 className="text-xl font-bold">ECOM</h1>
-      <button className="text-xl font-bold" onClick={() => navigate('/')}>
+    <nav className="flex justify-between p-8 bg-cyan-200 text-white">
+      <h1 className="text-xl text-black font-bold">ECOM</h1>
+      <button className="text-xl text-black font-bold" onClick={() => navigate('/')}>
         HOME
       </button>
-      <button className="relative" onClick={() => navigate('/cart')}>
+
+      <div className="relative">
+        <img 
+          className="w-10 h-10 cursor-pointer"
+          onClick={() => navigate('/cart')}
+          src='image/cartt.png' 
+          alt="Cart"
+        />
         <span className="absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 text-xs flex items-center justify-center">
           {cartCount}
         </span>
-        Cart
-      </button>
+      </div>
     </nav>
   );
 };

@@ -16,7 +16,7 @@ const App = () => {
       alert("Item already added to the cart");
       return;
     }
-    setCartItems([...cartItems, { ...item, qty: 1 }]); // Add quantity to the item
+    setCartItems([...cartItems, { ...item, qty: 1 }]);
   };
 
   const removeFromCart = (id) => {

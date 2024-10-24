@@ -7,7 +7,7 @@ const CartPage = ({ cartItems, onRemove }) => {
   const calculateTotal = () => {
     let total = 0;
     cart.forEach((item) => {
-      total += item.qty * item.price; // Use item.qty instead of a default
+      total += item.qty * item.price; 
     });
 
     const discount = total * 0.1;
@@ -75,11 +75,13 @@ const CartPage = ({ cartItems, onRemove }) => {
         </ul>
       )}
       {cart.length > 0 && (
-        <div className="mt-6">
-          <p className="text-xl font-bold">Cart Total: ${total.toFixed(2)}</p>
-          <p className="text-xl font-bold">Discounted Total (10% off): ${discounted.toFixed(2)}</p>
+        <div className="mt-6 gap-4">
+          <p className="text-xl ml-96 text-red-400 font-bold">Cart Total: ${total.toFixed(2)}</p>
+          <p className="text-xl ml-80 text-red-400  font-bold">Discounted Total (10% off): ${discounted.toFixed(2)}</p>
         </div>
+       
       )}
+       <button   className="bg-green-600 ml-96  text-white font-semibold py-1 px-2 rounded transition"  >buy now</button>
     </div>
   );
 };
