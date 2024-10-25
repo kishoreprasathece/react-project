@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductPage from './components/ProductPage';
-import CartPage from './components/CartPage';
+import Cart from './components/Cart';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -28,7 +28,7 @@ const App = () => {
       <Navbar cartCount={cartItems.length} />
       <Routes>
         <Route path="/" element={<ProductPage addToCart={addToCart} />} />
-        <Route path="/cart" element={<CartPage cartItems={cartItems} onRemove={removeFromCart} />} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} onRemove={removeFromCart} />} />
       </Routes>
       <Footer />
     </Router>

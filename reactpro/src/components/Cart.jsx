@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-const CartPage = ({ cartItems, onRemove }) => {
+const Cart = ({ cartItems, onRemove }) => {
   const [cart, setCart] = useState(cartItems);
 
   const calculateTotal = () => {
@@ -86,4 +86,4 @@ const CartPage = ({ cartItems, onRemove }) => {
   );
 };
 
-export default CartPage;
+export default Cart;
